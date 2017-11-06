@@ -3,6 +3,8 @@ from GameStates import GameStates
 
 
 class ScoreScreen:
+    FPS = 10
+
     def __init__(self, display, clock):
         self.clock = clock
         self.display = display

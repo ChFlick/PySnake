@@ -2,6 +2,7 @@ import pygame
 
 from GameStates import GameStates
 from ScoreScreen import ScoreScreen
+from StartScreen import StartScreen
 from Game import Game
 
 
@@ -15,13 +16,15 @@ def main():
 
     clock = pygame.time.Clock()
 
-    state = GameStates.GAME
+    state = GameStates.START
 
     while state != GameStates.EXIT:
         if state == GameStates.GAME:
             state = Game(display, clock).run()
         elif state == GameStates.SCORE:
             state = ScoreScreen(display, clock).run()
+        elif state == GameStates.START:
+            state = StartScreen(display, clock).run()
 
 
 if __name__ == "__main__":

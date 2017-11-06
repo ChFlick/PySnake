@@ -19,9 +19,10 @@ class Game:
 
     def run(self):
         time = 0
-        running = True
-        while running:
-            running = self.handleEvents()
+        while True:
+            state = self.handleEvents()
+            if state != GameStates.GAME:
+                return state
 
             self.player.update()
 
@@ -42,6 +43,6 @@ class Game:
                 return GameStates.EXIT
             elif event.type == KEYDOWN:
                 if event.key == K_ESCAPE:
-                    return False
+                    return GameStates.EXIT
 
-        return True
+        return GameStates.GAME

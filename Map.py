@@ -15,8 +15,8 @@ class Tiles:
     PLAYER_HEAD = Tile(2, (0, 153, 0))
     FOOD = Tile(3, (255, 0, 0))
 
-    WIDTH = 20
-    HEIGHT = 20
+    WIDTH = 25
+    HEIGHT = 25
     GAP = 2
 
 
