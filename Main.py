@@ -7,8 +7,8 @@ from Game import Game
 
 
 def main():
-    WINDOW_WIDTH = 640
-    WINDOW_HEIGHT = 640
+    WINDOW_WIDTH = 540
+    WINDOW_HEIGHT = 540
 
     pygame.init()
     display = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
@@ -19,6 +19,8 @@ def main():
     state = GameStates.START
 
     while state != GameStates.EXIT:
+        display.fill((0, 0, 0))
+
         if state == GameStates.GAME:
             state = Game(display, clock).run()
         elif state == GameStates.SCORE:

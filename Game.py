@@ -5,14 +5,12 @@ import pygame
 from pygame.locals import *
 
 from Player import Player, Direction
+from State import State
 
 
-class Game:
-    FPS = 10
-
+class Game(State):
     def __init__(self, display, clock):
-        self.clock = clock
-        self.display = display
+        State.__init__(self, display, clock)
 
         self.player = Player()
         self.map = Map(self.player)
@@ -43,6 +41,6 @@ class Game:
                 return GameStates.EXIT
             elif event.type == KEYDOWN:
                 if event.key == K_ESCAPE:
-                    return GameStates.EXIT
+                    return GameStates.MENU
 
         return GameStates.GAME
