@@ -1,6 +1,7 @@
 import pygame
 
 from GameStates import GameStates
+from Menu import Menu
 from ScoreScreen import ScoreScreen
 from StartScreen import StartScreen
 from Game import Game
@@ -23,6 +24,8 @@ def main():
 
         if state == GameStates.GAME:
             state = Game(display, clock).run()
+        elif state == GameStates.MENU:
+            state = Menu(display, clock).run()
         elif state == GameStates.SCORE:
             state = ScoreScreen(display, clock).run()
         elif state == GameStates.START:

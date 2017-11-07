@@ -2,6 +2,7 @@ from random import randint
 
 import pygame
 
+#TODO add Unit test
 
 class Tile:
     def __init__(self, id, color):
