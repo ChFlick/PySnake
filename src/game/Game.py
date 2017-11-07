@@ -1,10 +1,10 @@
 import pygame
-from src.GameStates import GameStates
-from src.Map import Map
-from src.Player import Player
 from pygame.locals import *
 
+from src.GameStates import GameStates
 from src.State import State
+from src.game.Map import Map
+from src.game.Player import Player
 
 
 class Game(State):

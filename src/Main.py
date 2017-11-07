@@ -1,10 +1,10 @@
 import pygame
 
-from src.Game import Game
+from src.GameStates import GameStates
 from src.Menu import Menu
 from src.ScoreScreen import ScoreScreen
 from src.StartScreen import StartScreen
-from src.GameStates import GameStates
+from src.game.Game import Game
 
 
 def main():
