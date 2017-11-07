@@ -26,14 +26,10 @@ class Menu(State):
         self.selectedId = 0
 
     def run(self):
-        headlinefont = pygame.font.SysFont("Garamond", 60, bold=True)
-        headline = headlinefont.render('Main Menu', True, (54,54,54))
-        headlinerect = headline.get_rect()
-        headlinerect.centerx = self.display.get_size()[0] / 2
-        headlinerect.centery = 50
-
         selectedFont = pygame.font.SysFont("Garamond", 48, bold=True)
         defaultFont = pygame.font.SysFont("Garamond", 48)
+
+        background = pygame.image.load('media/menu-background.bmp')
 
         while True:
             state = self.handleEvents()
@@ -41,7 +37,7 @@ class Menu(State):
                 return state
 
             self.display.fill((195, 195, 195))
-            self.display.blit(headline, headlinerect)
+            self.display.blit(background, (0,0))
 
             for i in range(len(self.MENU_STATES)):
                 text = None
@@ -51,7 +47,7 @@ class Menu(State):
                     text = defaultFont.render(self.MENU_STATES[i].text, True, (54,54,54))
                 textrect = text.get_rect()
                 textrect.centerx = self.display.get_size()[0] / 2
-                textrect.centery = 120 + 50 * i
+                textrect.centery = 160 + 50 * i
                 self.display.blit(text, textrect)
 
             pygame.display.update()

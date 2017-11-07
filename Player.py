@@ -15,6 +15,7 @@ class Player:
         self.posX = 10
         self.posY = 10
         self.tail = [[9, 10],[8, 10]]
+        self.score = 0
 
     def setDirection(self, direction):
         if (direction == Direction.LEFT or direction == Direction.RIGHT) and (self.previousDirection != Direction.LEFT and self.previousDirection != Direction.RIGHT) or \
@@ -56,6 +57,7 @@ class Player:
 
     def eat(self):
         self.tail.append(self.tail[len(self.tail) - 1])
+        self.score += 1
 
     def update(self):
         if pygame.key.get_pressed()[pygame.K_LEFT]:

@@ -18,16 +18,19 @@ def main():
     clock = pygame.time.Clock()
 
     state = GameStates.START
+    gamedata = None
 
     while state != GameStates.EXIT:
         display.fill((0, 0, 0))
 
         if state == GameStates.GAME:
-            state = Game(display, clock).run()
+            game = Game(display, clock)
+            state = game.run()
+            gamedata = game.forwardData
         elif state == GameStates.MENU:
             state = Menu(display, clock).run()
         elif state == GameStates.SCORE:
-            state = ScoreScreen(display, clock).run()
+            state = ScoreScreen(display, clock, gamedata).run()
         elif state == GameStates.START:
             state = StartScreen(display, clock).run()
 

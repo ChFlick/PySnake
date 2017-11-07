@@ -9,11 +9,14 @@ from State import State
 
 
 class Game(State):
+    SPEED = 500
+
     def __init__(self, display, clock):
         State.__init__(self, display, clock)
 
         self.player = Player()
         self.map = Map(self.player)
+        self.forwardData = {}
 
     def run(self):
         time = 0
@@ -25,10 +28,11 @@ class Game(State):
             self.player.update()
 
             time += self.clock.tick(self.FPS)
-            if time > 500:
+            if time > self.SPEED:
                 self.player.move(self.map)
                 self.map.update()
                 if self.player.checkDeath():
+                    self.forwardData["score"] = self.player.score
                     return GameStates.SCORE
                 time = 0
 
