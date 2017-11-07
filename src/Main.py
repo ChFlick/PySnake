@@ -1,10 +1,10 @@
 import pygame
 
-from GameStates import GameStates
-from Menu import Menu
-from ScoreScreen import ScoreScreen
-from StartScreen import StartScreen
-from Game import Game
+from src.Game import Game
+from src.Menu import Menu
+from src.ScoreScreen import ScoreScreen
+from src.StartScreen import StartScreen
+from src.GameStates import GameStates
 
 
 def main():

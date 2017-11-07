@@ -1,11 +1,9 @@
-from GameStates import GameStates
-from Map import Map
+from src.GameStates import GameStates
 
 import pygame
 from pygame.locals import *
 
-from Player import Player, Direction
-from State import State
+from src.State import State
 
 
 class MenuState:

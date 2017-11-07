@@ -1,6 +1,6 @@
 import pygame
-from GameStates import GameStates
-from State import State
+from src.GameStates import GameStates
+from src.State import State
 
 
 class ScoreScreen(State):
