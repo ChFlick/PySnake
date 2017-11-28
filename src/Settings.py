@@ -26,7 +26,7 @@ class SettingNames:
     SPEED = "Speed"
     LIVES = "Lives"
 
-    ALL_NAMES = [SPEED, LIVES]
+    PUBLIC_SETTINGS = [SPEED, LIVES]
 
 
 __settings = [

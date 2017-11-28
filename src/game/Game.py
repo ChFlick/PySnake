@@ -17,12 +17,14 @@ class Game(State):
         self.forwardData = {}
         self.speed = getSettingForName(SettingNames.SPEED).val
 
+        self.initResources()
+
+    def initResources(self):
+        self.scoreFont = pygame.font.SysFont("Consolas", 25)
+        self.liveImg = pygame.image.load('media/life.png').convert()
+        self.liveImg.set_colorkey((0, 255, 0))
+
     def run(self):
-        life = pygame.image.load('media/life.png').convert()
-        life.set_colorkey((0, 255, 0))
-
-        scoreFont = pygame.font.SysFont("Consolas", 25)
-
         time = 0
         while True:
             state = self.handleEvents()
@@ -40,15 +42,19 @@ class Game(State):
                     return GameStates.SCORE
                 time = 0
 
-            self.map.draw(self.display)
+            self.draw()
 
-            for i in range(self.player.lives):
-                self.display.blit(life, (27 * i, 0))
+    def draw(self):
+        self.map.draw(self.display)
 
-            scoreText = scoreFont.render(str(self.player.score), True, (255,0,0))
-            self.display.blit(scoreText, (self.display.get_size()[0] - 25, 0))
+        for i in range(self.player.lives):
+            self.display.blit(self.liveImg, (27 * i, 0))
 
-            pygame.display.update()
+        scoreText = self.scoreFont.render(str(self.player.score), True, (255, 0, 0))
+        self.display.blit(scoreText, (self.display.get_size()[0] - 50, 0))
+
+        pygame.display.update()
+
 
     def handleEvents(self):
         for event in pygame.event.get():

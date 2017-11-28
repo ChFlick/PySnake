@@ -3,7 +3,7 @@ from abc import ABCMeta, abstractmethod
 
 class State:
     __metaclass__ = ABCMeta
-    FPS = 10
+    FPS = 60
 
     def __init__(self, display, clock):
         self.clock = clock

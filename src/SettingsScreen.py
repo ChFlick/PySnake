@@ -8,48 +8,57 @@ from src.State import State
 
 
 class SettingsScreen(State):
-    MENU_STATES = SettingNames.ALL_NAMES + ["Back"]
+    MENU_STATES = SettingNames.PUBLIC_SETTINGS + ["Back"]
 
     def __init__(self, display, clock):
         State.__init__(self, display, clock)
 
         self.selectedId = 0
 
-    def run(self):
-        selectedFont = pygame.font.SysFont("Garamond", 48, bold=True)
-        defaultFont = pygame.font.SysFont("Garamond", 48)
+        self.initResources()
 
-        background = pygame.image.load('media/menu-background.bmp').convert()
+    def initResources(self):
+        self.selectedFont = pygame.font.SysFont("Garamond", 48, bold=True)
+        self.defaultFont = pygame.font.SysFont("Garamond", 48)
+
+        self.background = pygame.image.load('media/menu-background.bmp').convert()
+
+    def run(self):
+        self.clearDisplay()
 
         while True:
             state = self.handleEvents()
             if state is not None:
                 return state
 
-            self.display.fill((195, 195, 195))
-            self.display.blit(background, (0,0))
+            self.draw()
 
-            for i in range(len(self.MENU_STATES)):
-                setting = getSettingForName(self.MENU_STATES[i])
-                text = None
-                if setting is None:
-                    text = self.MENU_STATES[i]
-                else:
-                    text = str(setting)
+    def draw(self):
+        for i in range(len(self.MENU_STATES)):
+            setting = getSettingForName(self.MENU_STATES[i])
+            text = None
+            if setting is None:
+                text = self.MENU_STATES[i]
+            else:
+                text = str(setting)
 
-                renderedText = None
-                if self.selectedId == i:
-                    renderedText = selectedFont.render(text , True, (54,54,54))
-                else:
-                    renderedText = defaultFont.render(text, True, (54,54,54))
+            renderedText = None
+            if self.selectedId == i:
+                renderedText = self.selectedFont.render(text, True, (54, 54, 54))
+            else:
+                renderedText = self.defaultFont.render(text, True, (54, 54, 54))
 
-                textrect = renderedText.get_rect()
-                textrect.centerx = self.display.get_size()[0] / 2
-                textrect.centery = 160 + 50 * i
-                self.display.blit(renderedText, textrect)
+            textrect = renderedText.get_rect()
+            textrect.centerx = self.display.get_size()[0] / 2
+            textrect.centery = 160 + 50 * i
+            self.display.blit(renderedText, textrect)
 
-            pygame.display.update()
-            self.display.fill((0, 0, 0))
+        self.clearDisplay()
+
+    def clearDisplay(self):
+        pygame.display.update()
+        self.display.fill((195, 195, 195))
+        self.display.blit(self.background, (0, 0))
 
     def handleEvents(self):
         for event in pygame.event.get():

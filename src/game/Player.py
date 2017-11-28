@@ -1,6 +1,7 @@
 import pygame
 
 from src.Settings import SettingNames, getSettingForName
+from src.game.Map import Map
 
 
 class Direction:
@@ -26,33 +27,38 @@ class Player:
             self.direction = direction
 
     def move(self, map):
-        posXnew = self.posX
-        posYnew = self.posY
-
-        if self.direction == Direction.RIGHT:
-            posXnew = posXnew + 1 if posXnew < map.SIZE_X - 1 else 0
-        elif self.direction == Direction.LEFT:
-            posXnew = posXnew - 1 if posXnew > 0 else map.SIZE_X - 1
-        elif self.direction == Direction.UP:
-            posYnew = posYnew - 1 if posYnew > 0 else map.SIZE_Y - 1
-        elif self.direction == Direction.DOWN:
-            posYnew = posYnew + 1 if posYnew < map.SIZE_Y - 1 else 0
+        posXnew, posYnew = self.getNextPosition(self.posX, self.posY)
 
         if map.isFood(posXnew, posYnew):
             self.eat()
 
-        for i in reversed(range(len(self.tail))):
-            if i > 0:
-                self.tail[i] = self.tail[i - 1]
-
-        self.tail[0] = [self.posX, self.posY]
+        self.moveTail()
 
         self.posX = posXnew
         self.posY = posYnew
-
         self.previousDirection = self.direction
 
         self.checkWound()
+
+    def moveTail(self):
+        for i in reversed(range(len(self.tail))):
+            if i > 0:
+                self.tail[i] = self.tail[i - 1]
+        self.tail[0] = [self.posX, self.posY]
+
+    def getNextPosition(self, posX, posY):
+        posXnew, posYnew = posX, posY
+
+        if self.direction == Direction.RIGHT:
+            posXnew = posX + 1 if posX < Map.SIZE_X - 1 else 0
+        elif self.direction == Direction.LEFT:
+            posXnew = posX - 1 if posX > 0 else Map.SIZE_X - 1
+        elif self.direction == Direction.UP:
+            posYnew = posY - 1 if posY > 0 else Map.SIZE_Y - 1
+        elif self.direction == Direction.DOWN:
+            posYnew = posY + 1 if posY < Map.SIZE_Y - 1 else 0
+
+        return posXnew, posYnew
 
     def isDead(self):
         return self.lives == 0

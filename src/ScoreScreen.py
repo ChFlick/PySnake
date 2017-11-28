@@ -8,15 +8,19 @@ class ScoreScreen(State):
         State.__init__(self, display, clock)
         self.gamedata = gamedata
 
+        self.initResources()
+
+    def initResources(self):
+        self.defaultFont = pygame.font.SysFont("Garamond", 48)
+
     def run(self):
-        font = pygame.font.SysFont("Garamond", 48)
-        text = font.render('Game Over!', True, (255, 0, 0))
+        text = self.defaultFont.render('Game Over!', True, (255, 0, 0))
         textrect = text.get_rect()
         textrect.centerx = self.display.get_size()[0] / 2
         textrect.centery = 100
         self.display.blit(text, textrect)
 
-        text = font.render('Score: ' + str(self.gamedata["score"]), True, (255, 0, 0))
+        text = self.defaultFont.render('Score: ' + str(self.gamedata["score"]), True, (255, 0, 0))
         textrect = text.get_rect()
         textrect.centerx = self.display.get_size()[0] / 2
         textrect.centery = 150
