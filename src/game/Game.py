@@ -2,20 +2,20 @@ import pygame
 from pygame.locals import *
 
 from src.GameStates import GameStates
+from src.Settings import SettingNames, getSettingForName
 from src.State import State
 from src.game.Map import Map
 from src.game.Player import Player
 
 
 class Game(State):
-    SPEED = 500
-
     def __init__(self, display, clock):
         State.__init__(self, display, clock)
 
         self.player = Player()
         self.map = Map(self.player)
         self.forwardData = {}
+        self.speed = getSettingForName(SettingNames.SPEED).val
 
     def run(self):
         life = pygame.image.load('media/life.png').convert()
@@ -32,7 +32,7 @@ class Game(State):
             self.player.update()
 
             time += self.clock.tick(self.FPS)
-            if time > self.SPEED:
+            if time > self.speed:
                 self.player.move(self.map)
                 self.map.update()
                 if self.player.isDead():

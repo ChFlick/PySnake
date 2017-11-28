@@ -1,5 +1,7 @@
 import pygame
 
+from src.Settings import SettingNames, getSettingForName
+
 
 class Direction:
     LEFT = 'LEFT'
@@ -16,7 +18,7 @@ class Player:
         self.posY = 10
         self.tail = [[9, 10],[8, 10], [7, 10], [6, 10]]
         self.score = 0
-        self.lives = 3
+        self.lives = getSettingForName(SettingNames.LIVES).val
 
     def setDirection(self, direction):
         if (direction == Direction.LEFT or direction == Direction.RIGHT) and (self.previousDirection != Direction.LEFT and self.previousDirection != Direction.RIGHT) or \

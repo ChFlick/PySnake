@@ -3,21 +3,12 @@ from src.GameStates import GameStates
 import pygame
 from pygame.locals import *
 
+from src.Settings import SettingNames, getSettingForName
 from src.State import State
 
 
-class MenuState:
-    def __init__(self, text, gameState):
-        self.text = text
-        self.gameState = gameState
-
-
-class Menu(State):
-    MENU_STATES = [
-        MenuState("Play", GameStates.GAME),
-        MenuState("Settings", GameStates.SETTINGS),
-        MenuState("Quit", GameStates.EXIT)
-    ]
+class SettingsScreen(State):
+    MENU_STATES = SettingNames.ALL_NAMES + ["Back"]
 
     def __init__(self, display, clock):
         State.__init__(self, display, clock)
@@ -39,15 +30,23 @@ class Menu(State):
             self.display.blit(background, (0,0))
 
             for i in range(len(self.MENU_STATES)):
+                setting = getSettingForName(self.MENU_STATES[i])
                 text = None
-                if self.selectedId == i:
-                    text = selectedFont.render(self.MENU_STATES[i].text, True, (54,54,54))
+                if setting is None:
+                    text = self.MENU_STATES[i]
                 else:
-                    text = defaultFont.render(self.MENU_STATES[i].text, True, (54,54,54))
-                textrect = text.get_rect()
+                    text = str(setting)
+
+                renderedText = None
+                if self.selectedId == i:
+                    renderedText = selectedFont.render(text , True, (54,54,54))
+                else:
+                    renderedText = defaultFont.render(text, True, (54,54,54))
+
+                textrect = renderedText.get_rect()
                 textrect.centerx = self.display.get_size()[0] / 2
                 textrect.centery = 160 + 50 * i
-                self.display.blit(text, textrect)
+                self.display.blit(renderedText, textrect)
 
             pygame.display.update()
             self.display.fill((0, 0, 0))
@@ -65,7 +64,15 @@ class Menu(State):
                     self.selectedId += 1
                     if self.selectedId == len(self.MENU_STATES):
                         self.selectedId = 0
-                elif event.key == K_RETURN:
-                    return self.MENU_STATES[self.selectedId].gameState
+                elif event.key == K_RETURN and self.selectedId == len(self.MENU_STATES) - 1:
+                    return GameStates.MENU
                 elif event.key == K_ESCAPE:
-                    return GameStates.EXIT
+                    return GameStates.MENU
+                elif event.key == K_LEFT:
+                    setting = getSettingForName(self.MENU_STATES[self.selectedId])
+                    if setting is not None:
+                        setting.reduceVal()
+                elif event.key == K_RIGHT:
+                    setting = getSettingForName(self.MENU_STATES[self.selectedId])
+                    if setting is not None:
+                        setting.increaseVal()

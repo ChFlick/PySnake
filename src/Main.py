@@ -3,6 +3,7 @@ import pygame
 from src.GameStates import GameStates
 from src.Menu import Menu
 from src.ScoreScreen import ScoreScreen
+from src.SettingsScreen import SettingsScreen
 from src.StartScreen import StartScreen
 from src.game.Game import Game
 
@@ -29,6 +30,8 @@ def main():
             gamedata = game.forwardData
         elif state == GameStates.MENU:
             state = Menu(display, clock).run()
+        elif state == GameStates.SETTINGS:
+            state = SettingsScreen(display, clock).run()
         elif state == GameStates.SCORE:
             state = ScoreScreen(display, clock, gamedata).run()
         elif state == GameStates.START:
