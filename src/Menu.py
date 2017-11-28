@@ -27,7 +27,7 @@ class Menu(State):
         selectedFont = pygame.font.SysFont("Garamond", 48, bold=True)
         defaultFont = pygame.font.SysFont("Garamond", 48)
 
-        background = pygame.image.load('media/menu-background.bmp')
+        background = pygame.image.load('media/menu-background.bmp').convert()
 
         while True:
             state = self.handleEvents()

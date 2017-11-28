@@ -14,8 +14,9 @@ class Player:
         self.direction = Direction.RIGHT
         self.posX = 10
         self.posY = 10
-        self.tail = [[9, 10],[8, 10]]
+        self.tail = [[9, 10],[8, 10], [7, 10], [6, 10]]
         self.score = 0
+        self.lives = 3
 
     def setDirection(self, direction):
         if (direction == Direction.LEFT or direction == Direction.RIGHT) and (self.previousDirection != Direction.LEFT and self.previousDirection != Direction.RIGHT) or \
@@ -49,11 +50,17 @@ class Player:
 
         self.previousDirection = self.direction
 
-    def checkDeath(self):
-        dead = False
-        for x in self.tail:
-            dead = dead or x[0] == self.posX and x[1] == self.posY
-        return dead
+        self.checkWound()
+
+    def isDead(self):
+        return self.lives == 0
+
+    def checkWound(self):
+        for tailElement in self.tail:
+            if tailElement[0] == self.posX and tailElement[1] == self.posY:
+                self.lives -= 1
+                self.tail = self.tail[:self.tail.index(tailElement)]
+                return
 
     def eat(self):
         self.tail.append(self.tail[len(self.tail) - 1])

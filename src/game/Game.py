@@ -18,6 +18,11 @@ class Game(State):
         self.forwardData = {}
 
     def run(self):
+        life = pygame.image.load('media/life.png').convert()
+        life.set_colorkey((0, 255, 0))
+
+        scoreFont = pygame.font.SysFont("Consolas", 25)
+
         time = 0
         while True:
             state = self.handleEvents()
@@ -30,12 +35,19 @@ class Game(State):
             if time > self.SPEED:
                 self.player.move(self.map)
                 self.map.update()
-                if self.player.checkDeath():
+                if self.player.isDead():
                     self.forwardData["score"] = self.player.score
                     return GameStates.SCORE
                 time = 0
 
             self.map.draw(self.display)
+
+            for i in range(self.player.lives):
+                self.display.blit(life, (27 * i, 0))
+
+            scoreText = scoreFont.render(str(self.player.score), True, (255,0,0))
+            self.display.blit(scoreText, (self.display.get_size()[0] - 25, 0))
+
             pygame.display.update()
 
     def handleEvents(self):
